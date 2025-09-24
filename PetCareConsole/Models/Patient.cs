@@ -4,15 +4,15 @@ class Patient
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public int Edad { get; private set; }
-    public string Sintomas { get; private set; }
+    public int Age { get; private set; }
+    public string Symptoms { get; private set; }
 
-    public Patient(string name, int edad, string sintomas)
+    public Patient(string name, int age, string symptoms)
     {
         Id = Guid.NewGuid();
         this.Name = name;
-        this.Edad = edad;
-        this.Sintomas = sintomas;
+        this.Age = age;
+        this.Symptoms = symptoms;
     }
 
     public static void AskPatientInfo(List<Patient> patients)
@@ -24,11 +24,11 @@ class Patient
         string name = AskForName();
 
 
-        int? edad = AskForAge();
+        int? age = AskForAge();
 
 
-        string sintomas = AskForSymptoms();
-        if (name == null || edad == null || sintomas == null)
+        string symptoms = AskForSymptoms();
+        if (name == null || age == null || symptoms == null)
         {
             Console.WriteLine("Patient entry cancelled.");
             return;
@@ -36,8 +36,8 @@ class Patient
         else
         {
             Console.WriteLine("Patient added successfully!");
-            patients.Add(new Patient(name, edad.Value, sintomas));
-            Console.WriteLine($"Name: {name}, Age: {edad}, Symptoms: {sintomas}");
+            patients.Add(new Patient(name, age.Value, symptoms));
+            Console.WriteLine($"Name: {name}, Age: {age}, Symptoms: {symptoms}");
 
         }
 
@@ -71,8 +71,8 @@ class Patient
             if (string.Equals(input, "cancel", StringComparison.OrdinalIgnoreCase))
                 return null;
 
-            if (int.TryParse(input, out int edad) && edad > 0)
-                return edad;
+            if (int.TryParse(input, out int age) && age > 0)
+                return age;
 
             Console.WriteLine("Invalid age. Please enter a positive number or type 'cancel' to abort.");
         }
