@@ -37,7 +37,6 @@ class Patient
         {
             Console.WriteLine("Patient added successfully!");
             patients.Add(new Patient(name, age.Value, symptoms));
-            Console.WriteLine($"Name: {name}, Age: {age}, Symptoms: {symptoms}");
 
         }
 
@@ -93,6 +92,15 @@ class Patient
 
             Console.WriteLine("Symptoms cannot be empty. Please try again or type 'cancel' to abort.");
         }
+    }
+
+    public string ShowPatient(Patient patient)
+    {
+        return $"Patient ID: {patient.Id}\nName: {patient.Name}\nAge: {patient.Age}\nSymptoms: {patient.Symptoms}\n";
+    }
+    public string ShowLastPatient(List<Patient> patients)
+    {
+        return patients.Last().ShowPatient(patients.Last());
     }
 
 
