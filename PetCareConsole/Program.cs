@@ -1,2 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using PetCareConsole.Models;
+
+List<Patient>   patients = new List<Patient>();
+
+Patient.AskPatientInfo(patients);
+
+
+
+       
