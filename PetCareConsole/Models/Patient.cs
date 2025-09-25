@@ -7,20 +7,68 @@ class Patient
     public int Age { get; private set; }
     public string Symptoms { get; private set; }
 
+    //Constructor
     public Patient(string name, int age, string symptoms)
     {
-        Id = Guid.NewGuid();
+        this.Id = Guid.NewGuid();
         this.Name = name;
         this.Age = age;
         this.Symptoms = symptoms;
     }
 
+
+
+    // Method to display patient info
+    public string ShowPatient()
+    {
+        return $"Patient ID: {Id}\nName: {Name}\nAge: {Age}\nSymptoms: {Symptoms}\n";
+    }
+
+    public static Patient? SearchPatientById(Dictionary<int, Patient> patients, int id)
+    {
+        if (patients.TryGetValue(id, out Patient patient))
+        {
+            return patient;
+        }
+        return null;
+    }
+
+
+    // Method to show the last added patient
+    public static string ShowLastPatient(List<Patient> patients)
+    {
+        if (patients == null || patients.Count == 0)
+            return "No patients available.";
+        return patients.Last().ShowPatient();
+    }
+
+    // Method to show all patients
+    public static void ShowAllPatients(List<Patient> patients)
+    {
+        if (patients == null || patients.Count == 0)
+        {
+            Console.WriteLine("No patients available.");
+            return;
+        }
+
+        Console.WriteLine("All Patients:");
+        Console.WriteLine("-------------");
+        foreach (var patient in patients)
+        {
+            Console.WriteLine(patient.ShowPatient());
+        }
+    }
+
+
+    //Methods
+    // Method to ask for patient info
     public static void AskPatientInfo(List<Patient> patients)
     {
         Console.Clear();
         Console.WriteLine("Enter patient information (type 'cancel' anytime to abort):");
         Console.WriteLine("---------------------------------------------------------");
 
+        int id = AskForId(patients);
         string name = AskForName();
 
 
@@ -43,6 +91,8 @@ class Patient
 
     }
 
+    // Helper methods to ask for each field with validation
+    // Ask for Name
     private static string AskForName()
     {
         while (true)
@@ -60,6 +110,7 @@ class Patient
         }
     }
 
+    // Ask for Age
     private static int? AskForAge()
     {
         while (true)
@@ -77,6 +128,7 @@ class Patient
         }
     }
 
+    // Ask for Symptoms
     private static string AskForSymptoms()
     {
         while (true)
@@ -94,13 +146,21 @@ class Patient
         }
     }
 
-    public string ShowPatient(Patient patient)
+    private static int AskForId(Dictionary<int, Patient> patients)
     {
-        return $"Patient ID: {patient.Id}\nName: {patient.Name}\nAge: {patient.Age}\nSymptoms: {patient.Symptoms}\n";
-    }
-    public string ShowLastPatient(List<Patient> patients)
-    {
-        return patients.Last().ShowPatient(patients.Last());
+        int amountOfPatient = patients.Count > 0 ? patients.Count : 0;
+        if (amountOfPatient == 0)
+        {
+            Console.WriteLine("No patients available.");
+            return -1;
+        }
+        else
+        {
+
+            int idMax = patients.Keys.Max();
+            return idMax + 1;
+        }
+
     }
 
 
